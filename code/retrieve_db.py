@@ -1,12 +1,16 @@
 import sqlite3
 import pandas as pd
+from datetime import datetime, timedelta
+
 
 # Connect to the database
-conn = sqlite3.connect('data/stock_prices.db')
+conn = sqlite3.connect('../data/stock_prices_polygon.db')
 c = conn.cursor()
 
 # Select all rows from the stock_prices table
-c.execute('''SELECT * FROM stock_prices''')
+
+
+c.execute('''SELECT * FROM stock_prices_polygon''')
 
 # Get the column names from the cursor
 column_names = [column[0] for column in c.description]

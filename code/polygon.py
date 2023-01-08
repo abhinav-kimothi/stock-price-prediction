@@ -3,8 +3,17 @@ import sqlite3
 from datetime import datetime, timedelta
 import time
 import json
+import configparser
 
-# Set the ticker symbols for the top 10 S&P 500 stocks
+#read config.ini for polygon api key
+
+config=configparser.ConfigParser()
+config.read('../configuration/config.ini')
+
+api_key=config['polygon']['api_key']
+
+
+# Set the ticker symbols for the top 5 S&P 500 stocks
 ticker_symbols = ['AAPL','MSFT','AMZN','TSLA','GOOGL']
 
 # Set the time span and dates
@@ -16,11 +25,11 @@ start_date_str = start_date.strftime('%Y-%m-%d')
 end_date_str = end_date.strftime('%Y-%m-%d')
 
 # Connect to the database
-conn = sqlite3.connect('data/stock_prices.db')
+conn = sqlite3.connect('../data/stock_prices_polygon.db')
 c = conn.cursor()
 
 # Delete all rows from the stock_prices table
-c.execute('DELETE FROM stock_prices')
+c.execute('DELETE FROM stock_prices_polygon')
 
 # Set the counter for the number of API calls
 api_call_count = 0
@@ -29,7 +38,7 @@ api_call_count = 0
 for ticker in ticker_symbols:
     # Set the API endpoint and parameters
     url = f'https://api.polygon.io/v2/aggs/ticker/{ticker}/range/{multiplier}/{timespan}/{start_date_str}/{end_date_str}'
-    params = {'adjusted': 'true', 'sort': 'asc', 'limit': '10000', 'apiKey': 'IRWbyzyFiHZDiE8pIaAQqqzpu06_3tjH'}
+    params = {'adjusted': 'true', 'sort': 'asc', 'limit': '10000', 'apiKey': api_key}
 
     # Send the GET request and store the response
     response = requests.get(url, params=params)
@@ -55,7 +64,7 @@ for ticker in ticker_symbols:
         low_price = row.get('l')
         close_price = row.get('c')
         volume = row.get('v')
-        c.execute('''INSERT INTO stock_prices
+        c.execute('''INSERT INTO stock_prices_polygon
                  (ticker, date, open, high, low, close, volume) VALUES (?,?,?,?,?,?,?)''',
               (ticker, date, open_price, high_price, low_price, close_price, volume))
     # Increment the counter for the number of API calls

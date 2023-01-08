@@ -3,18 +3,18 @@ from datetime import datetime
 
 # Connect to the database
 try:
-    conn = sqlite3.connect('data/stock_prices.db')
+    conn = sqlite3.connect('../data/stock_prices_polygon.db')
 except FileNotFoundError:
     # If the database file does not exist, create it
-    open('data/stock_prices.db', 'w').close()
-    conn = sqlite3.connect('data/stock_prices.db')
+    open('../data/stock_prices.db', 'w').close()
+    conn = sqlite3.connect('data/stock_prices_polygon.db')
 c = conn.cursor()
 
 # Drop table if exists
-c.execute('''DROP TABLE IF EXISTS stock_prices''')
+c.execute('''DROP TABLE IF EXISTS stock_prices_polygon''')
 
 # Create a table for the stock prices
-c.execute('''CREATE TABLE IF NOT EXISTS stock_prices
+c.execute('''CREATE TABLE IF NOT EXISTS stock_prices_polygon
              (ticker text, date datetime, open real, high real, low real, close real, volume real)''')
 
 # Create a dummy data variable
@@ -43,7 +43,7 @@ if data:
         low_price = row['l']
         close_price = row['c']
         volume = row['v']
-        c.execute('''INSERT INTO stock_prices
+        c.execute('''INSERT INTO stock_prices_polygon
                      (ticker, date, open, high, low, close, volume) VALUES (?,?,?,?,?,?,?)''',
                   (ticker, date, open_price, high_price, low_price, close_price, volume))
 
