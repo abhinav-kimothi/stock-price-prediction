@@ -9,18 +9,19 @@ function App() {
       setSelectedStock(event.target.value);
   }
 
-  return (      
-      <div>
-          <label>Select a stock:</label>
-          <select value={selectedStock} onChange={handleChange}>
-              <option value="AAPL">Apple</option>
-              <option value="MSFT">Microsoft Corp.</option>
-              <option value="AMZN">Amazon.com Inc.</option>
-              <option value="TSLA">Tesla Inc.</option>
-              <option value="GOOGL">Alphabet Inc.</option>
-          </select>
-      </div>
-  );
+  return (
+    <div className="App">
+        <header className='App-header'>Stock Prediction</header>
+    <label>Select a stock:</label>
+    <select value={selectedStock} onChange={handleChange}>
+    <option value="AAPL">Apple</option>
+    <option value="MSFT">Microsoft Corp.</option>
+    <option value="AMZN">Amazon.com Inc.</option>
+    <option value="TSLA">Tesla Inc.</option>
+    <option value="GOOGL">Alphabet Inc.</option>
+    </select>
+    </div>
+    );
   }
 
   export default App;

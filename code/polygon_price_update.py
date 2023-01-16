@@ -11,7 +11,7 @@ from email.message import EmailMessage
 import configparser
 
 config=configparser.ConfigParser()
-config.read('../configuration/config.ini')
+config.read('./configuration/config.ini')
 
 api_key=config['polygon']['api_key']
 pswrd=config['gmail']['password']
@@ -22,7 +22,7 @@ ticker_symbols = ['AAPL','MSFT','AMZN','TSLA','GOOGL']
 # Set the time span and dates
 multiplier = '1'
 timespan = 'day'
-end_date = datetime.now() - timedelta(days=2)
+end_date = datetime.now() - timedelta(days=3)
 start_date = end_date# Update the data for the previous day
 start_date_str = start_date.strftime('%Y-%m-%d')
 end_date_str = end_date.strftime('%Y-%m-%d')
@@ -32,7 +32,7 @@ end_date=datetime.strptime(end_date, '%Y-%m-%d %H:%M:%S')
 start_date=datetime.strptime(start_date, '%Y-%m-%d %H:%M:%S') - timedelta(days=1)
 
 # Connect to the database
-conn = sqlite3.connect('../data/stock_prices_polygon.db')
+conn = sqlite3.connect('./data/stock_prices_polygon.db')
 c = conn.cursor()
 
 # Create a table for the stock prices
