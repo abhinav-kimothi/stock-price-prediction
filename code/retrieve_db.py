@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 
 def retrieve(ticker='AAPL'):
     # Connect to the database
-    conn = sqlite3.connect('./data/stock_prices_polygon.db')
+    conn = sqlite3.connect('../data/stock_prices_polygon.db')
     c = conn.cursor()
 
     # Select all rows from the stock_prices table
@@ -21,11 +21,13 @@ def retrieve(ticker='AAPL'):
     # Create a DataFrame from the rows
     df = pd.DataFrame(rows, columns=column_names)
 
-    print(df)
+    print(df.sort_values('date'))
 
     # Close the connection to the database
     conn.close()
 
     return({"data":df[['date','open']].to_dict()})
+
+retrieve(ticker='AAPL')
 
 
